@@ -35,13 +35,13 @@ class Button extends RawButton {
           loading: loading ?? false,
           onPressed: onPressed,
           padding:
-              padding ?? EdgeInsets.symmetric(vertical: 14, horizontal: 13),
+              padding ?? EdgeInsets.symmetric(vertical: 17, horizontal: 13),
           color: color,
           textColor: textColor,
           iconColor: iconColor,
           iconSize: iconSize ?? 20,
           shape: shape ??
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
           clipBehavior: clipBehavior ?? Clip.antiAlias,
         );
 
@@ -74,7 +74,7 @@ class RawButton extends StatelessWidget {
     this.trailing,
     @required this.onPressed,
     this.margin = const EdgeInsets.symmetric(vertical: 5, horizontal: 0),
-    this.padding = const EdgeInsets.symmetric(vertical: 14, horizontal: 13),
+    this.padding = const EdgeInsets.symmetric(vertical: 17, horizontal: 13),
     this.color = const Color(0x00000000),
     this.splashColor,
     this.textColor,
@@ -102,6 +102,8 @@ class RawButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Brightness brightness = Theme.of(context).brightness;
+
     return Container(
       margin: margin,
       child: Material(
@@ -121,7 +123,7 @@ class RawButton extends StatelessWidget {
               child: IconTheme(
                 data: IconTheme.of(context).copyWith(
                   size: iconSize,
-                  color: iconColor ?? getContrastColor(color),
+                  color: iconColor ?? getContrastColor(color, brightness),
                 ),
                 child: Stack(
                   alignment: Alignment.center,
@@ -129,7 +131,7 @@ class RawButton extends StatelessWidget {
                     getLeading(),
                     DefaultTextStyle(
                       style: TextStyle(
-                        color: textColor ?? getContrastColor(color),
+                        color: textColor ?? getContrastColor(color, brightness),
                         fontSize: 13,
                       ),
                       child: Align(
@@ -137,7 +139,7 @@ class RawButton extends StatelessWidget {
                         child: child,
                       ),
                     ),
-                    getTrailing(context),
+                    getTrailing(brightness),
                   ],
                 ),
               ),
@@ -148,11 +150,13 @@ class RawButton extends StatelessWidget {
     );
   }
 
-  Color getContrastColor(Color color) {
+  Color getContrastColor(Color color, Brightness brightness) {
     double luminance =
         (0.299 * color.red + 0.587 * color.green + 0.114 * color.blue) / 255;
 
-    if (color.opacity < 0.5 || luminance > 0.5)
+    if (brightness != Brightness.light && color.opacity < 0.5)
+      return Color.fromRGBO(255, 255, 255, 1);
+    else if (color.opacity < 0.5 || luminance > 0.5)
       return Color.fromRGBO(10, 10, 10, 1);
     else
       return Color.fromRGBO(255, 255, 255, 1);
@@ -168,12 +172,12 @@ class RawButton extends StatelessWidget {
       return Offstage();
   }
 
-  getTrailing(context) {
+  getTrailing(brightness) {
     if (loading)
       return Align(
         alignment: Alignment.centerRight,
         child: ButtonSpinner(
-          color: iconColor ?? getContrastColor(color),
+          color: iconColor ?? getContrastColor(color, brightness),
           size: iconSize,
         ),
       );

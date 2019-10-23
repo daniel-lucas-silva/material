@@ -22,7 +22,7 @@ class OutlineButton extends RawButton {
           loading: loading ?? false,
           onPressed: onPressed,
           padding: padding ??
-              const EdgeInsets.symmetric(vertical: 14, horizontal: 13),
+              const EdgeInsets.symmetric(vertical: 17, horizontal: 13),
           color: color,
           textColor: textColor,
           iconColor: iconColor,
@@ -46,7 +46,7 @@ class OutlineButton extends RawButton {
       iconColor: iconColor,
       iconSize: iconSize,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(7),
+        borderRadius: BorderRadius.circular(6),
         side: BorderSide(
           color: color ?? theme.buttonOutlineColor,
         ),
