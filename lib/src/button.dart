@@ -6,6 +6,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:material/src/ink_decoration.dart';
 
+import 'button_bar_theme.dart';
+import 'button_theme.dart';
 import 'constants.dart';
 import 'ink_well.dart';
 import 'material.dart';
@@ -13,6 +15,8 @@ import 'material_state.dart';
 import 'progress_indicator.dart';
 import 'theme.dart';
 import 'theme_data.dart';
+
+const kButtonPadding = const EdgeInsets.symmetric(vertical: 17, horizontal: 13);
 
 class Button extends RawButton {
   Button({
@@ -35,7 +39,7 @@ class Button extends RawButton {
           loading: loading ?? false,
           onPressed: onPressed,
           padding:
-              padding ?? EdgeInsets.symmetric(vertical: 17, horizontal: 13),
+              padding ?? kButtonPadding,
           color: color,
           textColor: textColor,
           iconColor: iconColor,
@@ -74,7 +78,7 @@ class RawButton extends StatelessWidget {
     this.trailing,
     @required this.onPressed,
     this.margin = const EdgeInsets.symmetric(vertical: 5, horizontal: 0),
-    this.padding = const EdgeInsets.symmetric(vertical: 17, horizontal: 13),
+    this.padding = kButtonPadding,
     this.color = const Color(0x00000000),
     this.splashColor,
     this.textColor,
@@ -102,8 +106,9 @@ class RawButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Brightness brightness = Theme.of(context).brightness;
-
+    final Brightness brightness = Theme.of(context).brightness;
+    final ButtonThemeData parentButtonTheme = ButtonTheme.of(context);
+    
     return Container(
       margin: margin,
       child: Material(
@@ -112,8 +117,11 @@ class RawButton extends StatelessWidget {
         type: MaterialType.button,
         clipBehavior: clipBehavior,
         borderOnForeground: false,
-        child: Ink(
-          decoration: decoration,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minWidth: parentButtonTheme.minWidth ?? 64.0,
+            minHeight: 52.0
+          ),
           child: InkWell(
             customBorder: shape,
             onTap: onPressed,
@@ -126,7 +134,7 @@ class RawButton extends StatelessWidget {
                   color: iconColor ?? getContrastColor(color, brightness),
                 ),
                 child: Stack(
-                  alignment: Alignment.center,
+                  fit: StackFit.passthrough,
                   children: <Widget>[
                     getLeading(),
                     DefaultTextStyle(

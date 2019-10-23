@@ -17,7 +17,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
 class Example extends StatefulWidget {
   @override
   _ExampleState createState() => _ExampleState();
@@ -92,14 +91,31 @@ class _ExampleState extends State<Example> {
               });
             },
             onSuccess: print,
-            onError: print, 
+            onError: print,
             // type: AsyncButtonType.outline,
           ),
+          ButtonBar(
+            buttonMinWidth: 150,
+            layoutBehavior: ButtonBarLayoutBehavior.constrained,
+            children: <Widget>[
+              Button(
+                child: Text("Aqui"),
+                onPressed: () {},
+              ),
+              AsyncButton(
+                child: Text("Outline"),
+                builder: (context) {
+                  return Future.delayed(Duration(seconds: 2), () {
+                    return "Ok";
+                  });
+                },
+                onSuccess: print,
+                onError: print,
+              ),
+            ],
+          )
         ],
       ),
     );
   }
 }
-
-
- 

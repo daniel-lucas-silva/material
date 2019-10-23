@@ -26,7 +26,7 @@ class AsyncButton<T> extends StatefulWidget {
     this.type = AsyncButtonType.filled,
     this.leading,
     this.trailing,
-    this.padding = const EdgeInsets.symmetric(vertical: 14, horizontal: 13),
+    this.padding = kButtonPadding,
     this.color,
     this.textColor,
     this.iconColor,

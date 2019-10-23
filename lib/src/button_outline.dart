@@ -21,8 +21,7 @@ class OutlineButton extends RawButton {
           child: child,
           loading: loading ?? false,
           onPressed: onPressed,
-          padding: padding ??
-              const EdgeInsets.symmetric(vertical: 17, horizontal: 13),
+          padding: padding ?? kButtonPadding,
           color: color,
           textColor: textColor,
           iconColor: iconColor,
