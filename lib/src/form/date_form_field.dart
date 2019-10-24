@@ -67,7 +67,7 @@ class DateFormField extends FormField<DateTime> {
                     initialDate: currentDate,
                     firstDate: firstDate ?? DateTime(1970),
                     lastDate: lastDate ?? DateTime(2099),
-                    locale: Locale("pt"),
+                    locale: locale,
                     builder: (context, widget) {
                       return Theme(
                         data: Theme.of(field.context)
