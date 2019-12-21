@@ -2278,6 +2278,7 @@ class ScaffoldState extends State<Scaffold> with TickerProviderStateMixin {
 
     switch (themeData.platform) {
       case TargetPlatform.iOS:
+      case TargetPlatform.macOS:
         _addIfNonNull(
           children,
           GestureDetector(
